@@ -256,6 +256,12 @@
       margin-top: 0;
     }
 
+    .abstract-single {
+      margin: 0;
+      text-indent: 2em;
+      text-align: justify;
+    }
+
     .motivation-figure {
       width: 100%;
       max-width: none;
@@ -545,17 +551,8 @@
 
       <div class="abstract-row">
         <div class="text-block">
-          <p>
-            Clustered infrared small target detection aims to distinguish densely adjacent small targets under low signal-to-noise ratios, weak textures, and complex background interference. Compared with conventional sparse infrared small target detection, this task is more prone to response coupling, target adhesion, and background false alarms.
-          </p>
-          <p>
-            Existing methods mainly emphasize single-target saliency enhancement or local structural modeling, but remain insufficient in exploiting inter-target spatial dependencies, spectral discrepancies, and cross-domain feature collaboration. To address these issues, we propose a Spatial&ndash;Spectral Differential Rectification Network, termed S<sup>2</sup>DRNet, to improve clustered-target discrimination from spatial, spectral, fusion, and supervision perspectives.
-          </p>
-          <p>
-            S<sup>2</sup>DRNet suppresses response diffusion among adjacent targets through multi-granularity dynamic aggregation, enhances target details while weakening background disturbances through spectral differential representation, adaptively complements spatial semantics with frequency-domain structural cues through hybrid-domain feature rectification, and strengthens the optimization of target-separation regions using a coupling-suppressed boundary mining loss.
-          </p>
-          <p>
-            Extensive experiments on DenseSIRST, SIRST3, and IRSTD-1K demonstrate that S<sup>2</sup>DRNet achieves superior detection performance over representative state-of-the-art methods while maintaining a favorable accuracy&ndash;efficiency balance.
+          <p class="abstract-single">
+            Clustered infrared small target detection aims to distinguish densely adjacent small targets under low signal-to-noise ratios, weak textures, and complex background interference, which makes it more prone to response coupling, target adhesion, and background false alarms than conventional sparse infrared small target detection. Existing methods mainly emphasize single-target saliency enhancement or local structural modeling, but remain insufficient in exploiting inter-target spatial dependencies, spectral discrepancies, and cross-domain feature collaboration. To address these issues, this paper proposes a Spatial&ndash;Spectral Differential Rectification Network, termed S<sup>2</sup>DRNet, to improve clustered-target discrimination from spatial, spectral, fusion, and supervision perspectives. Specifically, S<sup>2</sup>DRNet suppresses response diffusion among adjacent targets through multi-granularity dynamic aggregation, enhances target details while weakening background disturbances through spectral differential representation, adaptively complements spatial semantics with frequency-domain structural cues through hybrid-domain feature rectification, and strengthens the optimization of target-separation regions using a coupling-suppressed boundary mining loss. These designs jointly alleviate missed detections, false alarms, and boundary adhesion in clustered infrared small target detection. Extensive experiments on DenseSIRST, SIRST3, and IRSTD-1K demonstrate that S<sup>2</sup>DRNet achieves superior detection performance over representative state-of-the-art methods while maintaining a favorable accuracy&ndash;efficiency balance.
           </p>
         </div>
 

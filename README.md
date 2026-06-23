@@ -4,12 +4,12 @@
 
 **Peng Wang<sup>1</sup>, Ziling Lu<sup>1</sup>, Hankiz Yilahun<sup>1</sup>, Jihong Zhu<sup>2</sup>, and Askar Hamdulla<sup>1</sup>**
 
-<sup>1</sup>School of Computer Science and Technology, Xinjiang University
+<sup>1</sup>School of Computer Science and Technology, Xinjiang University<br>
 <sup>2</sup>Department of Precision Instrument, Tsinghua University
 
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](assets/paper.pdf)
-[![Dataset](https://img.shields.io/badge/Dataset-Coming%20Soon-blue)](#datasets)
-[![Code](https://img.shields.io/badge/Code-Coming%20Soon-black)](#how-to-use)
+[![Dataset](https://img.shields.io/badge/Dataset-Link-blue)](#datasets)
+[![Code](https://img.shields.io/badge/Code-Code-black)](#how-to-use)
 [![Project Page](https://img.shields.io/badge/Project-Page-green)](index.html)
 
 </div>
@@ -19,7 +19,7 @@
 ## News
 
 * **The project page is available.**
-* **Code, trained models, and dataset links will be released after the paper/public repository is ready.**
+* **Dataset links and code usage instructions are available.**
 
 If this repository is helpful to your research, please consider giving it a star.⭐⭐⭐
 
@@ -113,9 +113,9 @@ CBML strengthens the optimization of target-separation regions by emphasizing bo
 
 The experiments are conducted on three public infrared small target detection datasets:
 
-* **DenseSIRST** [[Original dataset](https://github.com/YimianDai/sirst)] 
-* **SIRST3** [[Original dataset](https://github.com/XinyiYing/LESPS)]
-* **IRSTD-1k** [[Original dataset](https://drive.google.com/file/d/1JoGDGF96v4CncKZprDnoIor0k1opaLZa/view)]
+* **DenseSIRST** [[DenseSIRST](https://github.com/YimianDai)] 
+* **SIRST3** [[SIRST3](https://github.com/XinyiYing/LESPS)]
+* **IRSTD-1k** [[IRSTD-1k](https://drive.google.com/file/d/1JoGDGF96v4CncKZprDnoIor0k1opaLZa/view)]
 
 
 Please organize the datasets according to the dataloader settings in this repository. A typical directory structure can be arranged as follows:
@@ -255,4 +255,4 @@ S<sup>2</sup>DRNet contains **0.85M parameters** and **6.09G FLOPs**.
 
 ## Contact
 
-For questions about S<sup>2</sup>DRNet, please open an issue in this repository or contact the authors by email after the official repository is released.
+For questions about S<sup>2</sup>DRNet, please open an issue in this repository or contact the authors by email.
