@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="S2DRNet: Spatial-Spectral Differential Rectification with Coupling Suppression for Clustered Infrared Small Target Detection">
+  <meta name="keywords" content="S2DRNet, CIRSTD, IRSTD, infrared small target detection, spatial-spectral differential rectification, coupling suppression">
+
+  <title>S2DRNet: Spatial-Spectral Differential Rectification for Clustered Infrared Small Target Detection</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    :root {
+      --text: #222;
+      --muted: #5c6470;
+      --line: #e9edf2;
+      --bg: #ffffff;
+      --soft-bg: #f6f8fb;
+      --dark: #222831;
+      --blue: #1f6feb;
+      --main-text-size: 1.22rem;
+      --affiliation-size: 1.38rem;
+      --maxw: 1180px;
+      --logo-size: 122px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: "Times New Roman", Times, serif;
+      line-height: 1.55;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--maxw), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 58px 0 30px;
+      text-align: center;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .paper-title {
+      font-family: "Times New Roman", Times, serif;
+      font-weight: 700;
+      color: #000;
+      text-align: center;
+      width: 100%;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .title-line1 {
+      font-size: clamp(1.85rem, 3.2vw, 2.35rem);
+      display: block;
+      margin-bottom: 3px;
+      white-space: normal;
+    }
+
+    .title-line2 {
+      font-size: clamp(1.65rem, 3vw, 2.15rem);
+      display: block;
+      margin-top: 0;
+      white-space: normal;
+    }
+
+    .authors {
+      margin-top: 20px;
+      font-size: var(--affiliation-size);
+      color: #000;
+      line-height: 1.45;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    .authors span {
+      display: inline-block;
+      margin: 0 5px 4px;
+    }
+
+    .orcid-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5px;
+      vertical-align: -0.08em;
+    }
+
+    .orcid-icon-svg {
+      width: 22px;
+      height: 22px;
+      display: inline-block;
+    }
+
+    .membership {
+      color: #000;
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    .institution-row {
+      margin: 12px auto 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 760px) auto;
+      align-items: center;
+      justify-content: center;
+      column-gap: 14px;
+    }
+
+    .school-logo {
+      width: var(--logo-size);
+      height: var(--logo-size);
+      object-fit: contain;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .institution-center {
+      height: var(--logo-size);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .affiliation {
+      color: #000;
+      font-size: var(--affiliation-size);
+      line-height: 1.25;
+      font-family: "Times New Roman", Times, serif;
+      text-align: center;
+    }
+
+    .affiliation-line {
+      display: block;
+      text-align: center;
+      white-space: normal;
+    }
+
+    .links {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 126px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: var(--dark);
+      color: #fff;
+      font-family: Arial, "Noto Sans", sans-serif;
+      font-weight: 700;
+      font-size: 1.08rem;
+      line-height: 1;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .btn i {
+      margin-right: 9px;
+      font-size: 1.12rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+
+    .btn.blue {
+      background: var(--blue);
+    }
+
+    .section {
+      padding: 46px 0;
+    }
+
+    .section.gray {
+      background: var(--soft-bg);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      text-align: center;
+      font-family: "Times New Roman", Times, serif;
+      font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+      font-weight: 700;
+      color: #333;
+    }
+
+    .section-line {
+      width: 100%;
+      height: 1px;
+      background: var(--line);
+      margin: 0 auto 26px;
+    }
+
+    .abstract-row {
+      display: grid;
+      grid-template-columns: minmax(360px, 1fr) minmax(360px, 1fr);
+      gap: 30px;
+      align-items: start;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .abstract-row .text-block {
+      max-width: none;
+      margin: 0;
+      font-size: var(--main-text-size);
+      display: block;
+    }
+
+    .text-block {
+      max-width: 1050px;
+      margin: 0 auto;
+      font-size: var(--main-text-size);
+      text-align: justify;
+    }
+
+    .text-block p {
+      margin: 0 0 14px;
+      text-indent: 2em;
+    }
+
+    .text-block p:first-child {
+      margin-top: 0;
+    }
+
+    .motivation-figure {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      margin: 0 auto;
+      display: block;
+      align-self: start;
+    }
+
+    .motivation-img-frame {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .motivation-img-frame img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      object-position: top center;
+    }
+
+    .motivation-caption {
+      margin-top: 10px;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.05rem;
+      line-height: 1.35;
+      color: #222;
+      text-align: justify;
+    }
+
+    .motivation-caption .fig-label {
+      color: #000;
+      font-weight: 400;
+    }
+
+    .keywords {
+      max-width: 1050px;
+      margin: 20px auto 0;
+      color: var(--muted);
+      font-size: var(--main-text-size);
+      text-align: center;
+    }
+
+    .figure {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+
+    .figure.plain {
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .figure img {
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+
+    .caption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      text-align: center;
+      line-height: 1.45;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      height: 100%;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(16, 24, 40, 0.05);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.34rem;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .card p {
+      margin: 0;
+      color: #333;
+      text-align: justify;
+      font-size: var(--main-text-size);
+    }
+
+    .performance-figures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+      margin: 0 auto 28px;
+      max-width: 1120px;
+    }
+
+    .performance-figures .figure {
+      height: 100%;
+    }
+
+    .performance-figures img {
+      max-height: 360px;
+      object-fit: contain;
+    }
+
+    .performance-table-image {
+      max-width: 1120px;
+      margin: 0 auto 28px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 12px 28px rgba(16, 24, 40, 0.06);
+    }
+
+    .performance-table-image img {
+      width: 100%;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .funding-text {
+      max-width: 1040px;
+      margin: 0 auto;
+      color: #333;
+      font-family: "Times New Roman", Times, serif;
+      font-size: var(--main-text-size);
+      line-height: 1.55;
+      text-align: justify;
+    }
+
+    .footer {
+      padding: 28px 0;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid var(--line);
+      background: #fbfcfe;
+      font-size: 1.05rem;
+    }
+
+    @media (max-width: 840px) {
+      :root {
+        --logo-size: 88px;
+      }
+
+      .container {
+        width: min(100% - 24px, var(--maxw));
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      .authors {
+        font-size: 1.14rem;
+      }
+
+      .orcid-icon-svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .institution-row {
+        grid-template-columns: auto auto;
+        column-gap: 14px;
+        row-gap: 10px;
+      }
+
+      .institution-center {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        height: auto;
+        gap: 12px;
+      }
+
+      .affiliation {
+        font-size: 1.14rem;
+      }
+
+      .school-logo {
+        width: var(--logo-size);
+        height: var(--logo-size);
+      }
+
+      .text-block,
+      .abstract-row .text-block,
+      .card p,
+      .keywords,
+      .funding-text {
+        font-size: 1.05rem;
+      }
+
+      .title-line1 {
+        font-size: 1.75rem;
+      }
+
+      .title-line2 {
+        font-size: 1.55rem;
+      }
+
+      .abstract-row,
+      .grid,
+      .performance-figures {
+        grid-template-columns: 1fr;
+      }
+
+      .motivation-figure {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .motivation-img-frame img {
+        height: auto;
+      }
+
+      .btn {
+        min-width: 120px;
+        padding: 11px 20px;
+        font-size: 1.04rem;
+      }
+
+      .btn i {
+        font-size: 1.08rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="container">
+      <div class="paper-title title-line1">S<sup>2</sup>DRNet: Spatial&ndash;Spectral Differential Rectification</div>
+      <div class="paper-title title-line2">with Coupling Suppression for Clustered Infrared Small Target Detection</div>
+
+      <div class="authors">
+        <span>Peng Wang<a class="orcid-link" href="https://orcid.org/0009-0001-6089-6617" target="_blank" aria-label="Peng Wang ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>,</span>
+        <span>Ziling Lu<a class="orcid-link" href="https://orcid.org/0009-0003-1073-9175" target="_blank" aria-label="Ziling Lu ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>,</span>
+        <span>Hankiz Yilahun<a class="orcid-link" href="https://orcid.org/0009-0004-8548-678X" target="_blank" aria-label="Hankiz Yilahun ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>,</span>
+        <span>Jihong Zhu<a class="orcid-link" href="https://orcid.org/0000-0001-6830-1211" target="_blank" aria-label="Jihong Zhu ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>, <span class="membership">Member, IEEE</span>,</span>
+        <span>and Askar Hamdulla<a class="orcid-link" href="https://orcid.org/0000-0002-2321-308X" target="_blank" aria-label="Askar Hamdulla ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>, <span class="membership">Member, IEEE</span></span>
+      </div>
+
+      <div class="institution-row">
+        <img class="school-logo" src="imgs/XJU.png" alt="Xinjiang University Logo">
+
+        <div class="institution-center">
+          <div class="affiliation">
+            <span class="affiliation-line">School of Computer Science and Technology, Xinjiang University</span>
+            <span class="affiliation-line">Department of Precision Instrument, Tsinghua University</span>
+          </div>
+
+          <div class="links">
+            <a class="btn" href="assets/paper.pdf" target="_blank"><i class="fas fa-file-pdf"></i>Paper</a>
+            <a class="btn blue" href="#" target="_blank"><i class="fas fa-database"></i>Dataset</a>
+            <a class="btn" href="#" target="_blank"><i class="fab fa-github"></i>Code</a>
+          </div>
+        </div>
+
+        <img class="school-logo" src="imgs/THU.png" alt="Tsinghua University Logo">
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Abstract</h2>
+      <div class="section-line"></div>
+
+      <div class="abstract-row">
+        <div class="text-block">
+          <p>
+            Clustered infrared small target detection aims to distinguish densely adjacent small targets under low signal-to-noise ratios, weak textures, and complex background interference. Compared with conventional sparse infrared small target detection, this task is more prone to response coupling, target adhesion, and background false alarms.
+          </p>
+          <p>
+            Existing methods mainly emphasize single-target saliency enhancement or local structural modeling, but remain insufficient in exploiting inter-target spatial dependencies, spectral discrepancies, and cross-domain feature collaboration. To address these issues, we propose a Spatial&ndash;Spectral Differential Rectification Network, termed S<sup>2</sup>DRNet, to improve clustered-target discrimination from spatial, spectral, fusion, and supervision perspectives.
+          </p>
+          <p>
+            S<sup>2</sup>DRNet suppresses response diffusion among adjacent targets through multi-granularity dynamic aggregation, enhances target details while weakening background disturbances through spectral differential representation, adaptively complements spatial semantics with frequency-domain structural cues through hybrid-domain feature rectification, and strengthens the optimization of target-separation regions using a coupling-suppressed boundary mining loss.
+          </p>
+          <p>
+            Extensive experiments on DenseSIRST, SIRST3, and IRSTD-1K demonstrate that S<sup>2</sup>DRNet achieves superior detection performance over representative state-of-the-art methods while maintaining a favorable accuracy&ndash;efficiency balance.
+          </p>
+        </div>
+
+        <div class="figure plain motivation-figure">
+          <div class="motivation-img-frame">
+            <img src="imgs/introduction.jpg" alt="Motivation and overview of S2DRNet">
+          </div>
+          <div class="motivation-caption">
+            <span class="fig-label">Fig. 1.</span> (A) Challenges caused by target adhesion, missed detection, and false alarms. (B) Proposed framework: (1) spatial aggregation via MDAM, (2) spectral decoupling via SDRM, and (3) overview of S<sup>2</sup>DRNet.
+          </div>
+        </div>
+      </div>
+
+      <div class="keywords">
+        <b>Keywords:</b> clustered infrared small target detection, spatial&ndash;spectral differential rectification, coupling suppression, spectral decoupling, boundary mining.
+      </div>
+    </div>
+  </section>
+
+  <section class="section gray">
+    <div class="container">
+      <h2 class="section-title">Motivation</h2>
+      <div class="section-line"></div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Target-response coupling</h3>
+          <p>
+            Dense and adjacent infrared small targets tend to produce mutually diffused responses, making individual targets adhere to each other and weakening target separation.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Spectral interference aliasing</h3>
+          <p>
+            Target details, background edges, and high-frequency noise are easily mixed in complex infrared scenes, causing missed detections of weak targets and false alarms from non-target structures.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Cross-domain feature imbalance</h3>
+          <p>
+            Direct fusion of spatial semantic features and frequency-domain structural priors may introduce redundant responses and unbalanced feature contributions.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Insufficient boundary supervision</h3>
+          <p>
+            Narrow gap regions between adjacent targets occupy very few pixels, so conventional segmentation losses provide limited supervision for target-separation boundaries.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Overall Architecture</h2>
+      <div class="section-line"></div>
+
+      <div class="figure">
+        <img src="imgs/TGRS-model.jpg" alt="Overall architecture of S2DRNet">
+        <div class="caption">
+          Overall architecture of S<sup>2</sup>DRNet. The framework performs parallel spatial&ndash;spectral feature extraction and hybrid-domain feature rectification for clustered infrared small target detection.
+        </div>
+      </div>
+
+      <div class="text-block" style="margin-top: 26px;">
+        <p>
+          The spatial branch progressively extracts multi-scale spatial features through residual blocks and the Multi-granularity Dynamic Aggregation Module (MDAM), thereby enhancing local target responses and suppressing response diffusion among adjacent targets.
+        </p>
+        <p>
+          The frequency-domain branch introduces the Spectral Differential Representation Module (SDRM) to decompose low-frequency structures and high-frequency details, while the Hybrid-Domain Feature Rectification Module (HDFR) adaptively integrates spatial semantics and frequency-domain priors. During training, the Coupling-suppressed Boundary Mining Loss (CBML) strengthens supervision on adjacent-target boundaries and gap regions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gray">
+    <div class="container">
+      <h2 class="section-title">Spatial and Spectral Representation</h2>
+      <div class="section-line"></div>
+
+      <div class="figure">
+        <img src="imgs/MDAM+SDRM.jpg" alt="Detailed structures of MDAM and SDRM">
+        <div class="caption">
+          Detailed structures of MDAM and SDRM. MDAM models square local neighborhoods and cross-strip directional neighborhoods, while SDRM performs wavelet-based structure-detail decomposition and multi-directional differential refinement.
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top: 24px;">
+        <div class="card">
+          <h3>MDAM: Multi-granularity Dynamic Aggregation</h3>
+          <p>
+            MDAM enhances clustered-target spatial representation through square dynamic aggregation for local response enhancement and cross-strip dynamic aggregation for adjacent-target coupling suppression.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>SDRM: Spectral Differential Representation</h3>
+          <p>
+            SDRM decomposes features into low-frequency structural components and high-frequency details, then refines target details and suppresses edge-noise interference through multi-directional differential convolution.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Hybrid-Domain Feature Rectification</h2>
+      <div class="section-line"></div>
+
+      <div class="figure">
+        <img src="imgs/TGRS-HDFR1.jpg" alt="Detailed structure of HDFR and ACAM">
+        <div class="caption">
+          HDFR adaptively rectifies spatial semantic features and frequency-domain priors through axial-channel adaptive modulation and branch-wise competitive weighting.
+        </div>
+      </div>
+
+      <div class="text-block" style="margin-top: 26px;">
+        <p>
+          HDFR is designed to alleviate response inconsistency and redundant interference caused by direct cross-domain fusion. It first forms an initial hybrid-domain representation by combining spatial features with complementary frequency-aware features, and then uses axial-channel adaptive modulation to screen reliable responses from both spatial and channel dimensions.
+        </p>
+        <p>
+          Based on the modulated feature, HDFR generates branch-wise competitive attention maps for the spatial branch and complementary branch. This strategy improves cross-domain balance and produces progressively refined hybrid-domain representations for clustered target separation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gray">
+    <div class="container">
+      <h2 class="section-title">Detection Performance</h2>
+      <div class="section-line"></div>
+
+      <div class="performance-figures">
+        <div class="figure">
+          <img src="imgs/pf.png" alt="Performance-efficiency comparison on DenseSIRST">
+          <div class="caption">
+            Fig. 2. Performance&ndash;efficiency comparison of different methods on DenseSIRST. The X-axis denotes FLOPs, the Y-axis denotes mIoU, and the bubble size indicates the number of parameters.
+          </div>
+        </div>
+
+        <div class="figure">
+          <img src="imgs/radar.png" alt="Radar evaluation of representative methods">
+          <div class="caption">
+            Fig. 3. Evaluation of representative methods on the DenseSIRST and SIRST3 datasets, where the outer regions indicate superior detection performance.
+          </div>
+        </div>
+      </div>
+
+      <div class="performance-table-image">
+        <img src="imgs/perform.png" alt="Detection performance comparison table">
+        <div class="caption">
+          Table I. Detection performance comparison on DenseSIRST, SIRST3, and IRSTD-1K. Metrics include mIoU/nIoU/P<sub>d</sub> (%), F<sub>a</sub> (10<sup>&minus;6</sup>), Params (M), FLOPs (G), and FPS.
+        </div>
+      </div>
+
+      <div class="figure">
+        <img src="imgs/roc.jpg" alt="ROC curves of different methods">
+        <div class="caption">
+          ROC comparison on DenseSIRST, SIRST3, and IRSTD-1K. The proposed method maintains stable detection capability under strict false-alarm constraints.
+        </div>
+      </div>
+
+      <div class="text-block" style="margin-top: 26px;">
+        <p>
+          S<sup>2</sup>DRNet contains only 0.85M parameters and 6.09G FLOPs, while achieving 16.18 FPS. The results indicate a favorable balance between detection accuracy and deployment efficiency.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Visual Results</h2>
+      <div class="section-line"></div>
+
+      <div class="figure">
+        <img src="imgs/vision_1.jpg" alt="Visual comparison of infrared small target detection methods">
+        <div class="caption">
+          Visual comparison on DenseSIRST, SIRST3, and IRSTD-1K. S<sup>2</sup>DRNet separates adjacent targets more clearly and suppresses background interference more effectively.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gray">
+    <div class="container">
+      <h2 class="section-title">Response Distribution Analysis</h2>
+      <div class="section-line"></div>
+
+      <div class="figure">
+        <img src="imgs/3dmesh.jpg" alt="Three-dimensional response distributions">
+        <div class="caption">
+          Three-dimensional response distributions. Sharper and cleaner response peaks indicate more accurate target localization and stronger background suppression.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Conclusion</h2>
+      <div class="section-line"></div>
+
+      <div class="text-block">
+        <p>
+          S<sup>2</sup>DRNet formulates clustered infrared small target detection as a target&ndash;background discrimination problem jointly driven by spatial aggregation, spectral decoupling, cross-domain rectification, and boundary mining. MDAM suppresses neighboring-target response diffusion, SDRM decouples background structures, target details, and noise disturbances, HDFR performs adaptive cross-domain feature rectification, and CBML strengthens boundary-gap supervision from the optimization perspective.
+        </p>
+        <p>
+          Extensive experiments demonstrate that S<sup>2</sup>DRNet outperforms representative existing methods on three public datasets while maintaining a favorable accuracy&ndash;efficiency balance.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gray">
+    <div class="container">
+      <h2 class="section-title">Funding</h2>
+      <div class="section-line"></div>
+
+      <div class="funding-text">
+        This work was supported by the Tianshan Talents Cultivation Program -- Leadings Talents for Scientific and Technological Innovation (No.2024TSYCLJ0002), and the Xinjiang University Outstanding Graduate Student Innovation Project (XJDX2025YJS088).
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      This project page is adapted for S<sup>2</sup>DRNet. Replace the paper, dataset, and code links when public resources are available.
+    </div>
+  </footer>
+</body>
+</html>
