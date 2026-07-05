@@ -8,7 +8,7 @@
   <meta name="description" content="S2DRNet: Spatial-Spectral Differential Rectification with Coupling Suppression for Clustered Infrared Small Target Detection">
   <meta name="keywords" content="S2DRNet, CIRSTD, IRSTD, infrared small target detection, spatial-spectral differential rectification, coupling suppression">
 
-  <title>S2DRNet: Spatial-Spectral Differential Rectification for Clustered Infrared Small Target Detection</title>
+  <title>S2DRNet: Spatial-Spectral Differential Rectification with Coupling Suppression for Clustered Infrared Small Target Detection</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -138,7 +138,8 @@
     }
 
     .institution-center {
-      height: var(--logo-size);
+      min-height: var(--logo-size);
+      height: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -520,6 +521,7 @@
         <span>Ziling Lu<a class="orcid-link" href="https://orcid.org/0009-0003-1073-9175" target="_blank" aria-label="Ziling Lu ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>,</span>
         <span>Hankiz Yilahun<a class="orcid-link" href="https://orcid.org/0009-0004-8548-678X" target="_blank" aria-label="Hankiz Yilahun ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>,</span>
         <span>Jihong Zhu<a class="orcid-link" href="https://orcid.org/0000-0001-6830-1211" target="_blank" aria-label="Jihong Zhu ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>, <span class="membership">Member, IEEE</span>,</span>
+        <span>Eksan Firkat<a class="orcid-link" href="https://orcid.org/0000-0003-0755-149X" target="_blank" aria-label="Eksan Firkat ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>,</span>
         <span>and Askar Hamdulla<a class="orcid-link" href="https://orcid.org/0000-0002-2321-308X" target="_blank" aria-label="Askar Hamdulla ORCID"><svg class="orcid-icon-svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><circle cx="128" cy="128" r="128" fill="#A6CE39"></circle><text x="128" y="166" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="116" font-weight="700">iD</text></svg></a>, <span class="membership">Member, IEEE</span></span>
       </div>
 
@@ -530,6 +532,7 @@
           <div class="affiliation">
             <span class="affiliation-line">School of Computer Science and Technology, Xinjiang University</span>
             <span class="affiliation-line">Department of Precision Instrument, Tsinghua University</span>
+            <span class="affiliation-line">Tsinghua Shenzhen International Graduate School, Tsinghua University</span>
           </div>
 
           <div class="links">
@@ -552,7 +555,7 @@
       <div class="abstract-row">
         <div class="text-block">
           <p class="abstract-single">
-            Clustered infrared small target detection aims to distinguish densely adjacent small targets under low signal-to-noise ratios, weak textures, and complex background interference, which makes it more prone to response coupling, target adhesion, and background false alarms than conventional sparse infrared small target detection. Existing methods mainly emphasize single-target saliency enhancement or local structural modeling, but remain insufficient in exploiting inter-target spatial dependencies, spectral discrepancies, and cross-domain feature collaboration. To address these issues, this paper proposes a Spatial&ndash;Spectral Differential Rectification Network, termed S<sup>2</sup>DRNet, to improve clustered-target discrimination from spatial, spectral, fusion, and supervision perspectives. Specifically, S<sup>2</sup>DRNet suppresses response diffusion among adjacent targets through multi-granularity dynamic aggregation, enhances target details while weakening background disturbances through spectral differential representation, adaptively complements spatial semantics with frequency-domain structural cues through hybrid-domain feature rectification, and strengthens the optimization of target-separation regions using a coupling-suppressed boundary mining loss. These designs jointly alleviate missed detections, false alarms, and boundary adhesion in clustered infrared small target detection. Extensive experiments on DenseSIRST, SIRST3, and IRSTD-1K demonstrate that S<sup>2</sup>DRNet achieves superior detection performance over representative state-of-the-art methods while maintaining a favorable accuracy&ndash;efficiency balance.
+            Infrared small target detection (IRSTD) is crucial in infrared remote sensing, while clustered IRSTD (CIRSTD) is more challenging due to dense target distributions and spatial response coupling. Existing methods remain limited in suppressing spatial response coupling among clustered targets and non-target interference, with insufficient boundary supervision, which may lead to missed detections, false alarms, and boundary ambiguity. To address these issues, this paper proposes a Spatial&ndash;Spectral Differential Rectification Network, termed S<sup>2</sup>DRNet. First, the Multi-granularity Dynamic Aggregation Module (MDAM) alleviates response coupling between adjacent targets through the collaborative modeling of square local neighborhoods and cross-strip directional neighborhoods. Then, the Spectral Differential Representation Module (SDRM) integrates spectral decomposition and multi-directional differential modeling to suppress non-target high-frequency interference. Furthermore, the Hybrid Domain Feature Rectification Module (HDFR) aligns spatial semantic information with spectral structural cues to achieve cross-domain feature rectification. In addition, the Coupling Suppression Boundary Mining Loss (CBML) alleviates boundary ambiguity from the optimization perspective. Extensive experiments on DenseSIRST, SIRST3, and IRSTD-1k demonstrate that S<sup>2</sup>DRNet has only 0.85M parameters, outperforms representative state-of-the-art methods, and maintains a favorable balance between detection accuracy and efficiency.
           </p>
         </div>
 
@@ -581,28 +584,28 @@
         <div class="card">
           <h3>Target-response coupling</h3>
           <p>
-            Dense and adjacent infrared small targets tend to produce mutually diffused responses, making individual targets adhere to each other and weakening target separation.
+            Spatial adjacency among clustered infrared small targets tends to induce mutual response coupling, causing target adhesion and difficult narrow-gap separation.
           </p>
         </div>
 
         <div class="card">
           <h3>Spectral interference aliasing</h3>
           <p>
-            Target details, background edges, and high-frequency noise are easily mixed in complex infrared scenes, causing missed detections of weak targets and false alarms from non-target structures.
+            Background edges, high-frequency noise, and target details exhibit similar frequency-domain responses, resulting in aliasing between targets and non-target interference.
           </p>
         </div>
 
         <div class="card">
           <h3>Cross-domain feature imbalance</h3>
           <p>
-            Direct fusion of spatial semantic features and frequency-domain structural priors may introduce redundant responses and unbalanced feature contributions.
+            Directly fusing spatial semantic features and frequency-domain structural priors may introduce response imbalance and redundant interference.
           </p>
         </div>
 
         <div class="card">
           <h3>Insufficient boundary supervision</h3>
           <p>
-            Narrow gap regions between adjacent targets occupy very few pixels, so conventional segmentation losses provide limited supervision for target-separation boundaries.
+            Narrow gap regions occupy only a very small proportion of pixels, making conventional segmentation losses insufficient for effective boundary supervision.
           </p>
         </div>
       </div>
@@ -623,10 +626,10 @@
 
       <div class="text-block" style="margin-top: 26px;">
         <p>
-          The spatial branch progressively extracts multi-scale spatial features through residual blocks and the Multi-granularity Dynamic Aggregation Module (MDAM), thereby enhancing local target responses and suppressing response diffusion among adjacent targets.
+          S<sup>2</sup>DRNet consists of two stages: parallel spatial&ndash;spectral feature extraction and hybrid-domain fusion. The spatial branch progressively extracts multi-scale spatial features through Residual Blocks and MDAM, thereby enhancing local target responses.
         </p>
         <p>
-          The frequency-domain branch introduces the Spectral Differential Representation Module (SDRM) to decompose low-frequency structures and high-frequency details, while the Hybrid-Domain Feature Rectification Module (HDFR) adaptively integrates spatial semantics and frequency-domain priors. During training, the Coupling-suppressed Boundary Mining Loss (CBML) strengthens supervision on adjacent-target boundaries and gap regions.
+          The frequency-domain branch introduces SDRM to strengthen weak-target discriminative representations through spectral decoupling while suppressing background structures and noise. HDFR then fuses spatial features with frequency-domain priors in a bottom-up manner, and CBML strengthens supervision of adjacent-target boundaries and gap regions during training.
         </p>
       </div>
     </div>
@@ -648,14 +651,14 @@
         <div class="card">
           <h3>MDAM: Multi-granularity Dynamic Aggregation</h3>
           <p>
-            MDAM enhances clustered-target spatial representation through square dynamic aggregation for local response enhancement and cross-strip dynamic aggregation for adjacent-target coupling suppression.
+            MDAM jointly models square local neighborhoods and cross-strip directional neighborhoods to enhance weak-target representations while alleviating response coupling among neighboring targets.
           </p>
         </div>
 
         <div class="card">
           <h3>SDRM: Spectral Differential Representation</h3>
           <p>
-            SDRM decomposes features into low-frequency structural components and high-frequency details, then refines target details and suppresses edge-noise interference through multi-directional differential convolution.
+            SDRM employs Haar wavelet decomposition and multi-directional differential convolution to preserve low-frequency structures, refine high-frequency target details, and suppress edge-noise interference.
           </p>
         </div>
       </div>
@@ -676,10 +679,10 @@
 
       <div class="text-block" style="margin-top: 26px;">
         <p>
-          HDFR is designed to alleviate response inconsistency and redundant interference caused by direct cross-domain fusion. It first forms an initial hybrid-domain representation by combining spatial features with complementary frequency-aware features, and then uses axial-channel adaptive modulation to screen reliable responses from both spatial and channel dimensions.
+          HDFR is designed to address response distribution discrepancies between spatial semantic features and spectral structural cues. It introduces complementary features in a deep-to-shallow manner and forms an initial hybrid-domain representation for progressive cross-domain interaction.
         </p>
         <p>
-          Based on the modulated feature, HDFR generates branch-wise competitive attention maps for the spatial branch and complementary branch. This strategy improves cross-domain balance and produces progressively refined hybrid-domain representations for clustered target separation.
+          ACAM captures axial contextual dependencies and channel-wise interactions to suppress redundant cross-domain responses. Based on the rectified feature, HDFR generates branch-wise competitive weights for the spatial and complementary branches, thereby balancing their contributions and producing refined hybrid-domain representations.
         </p>
       </div>
     </div>
@@ -701,7 +704,7 @@
         <div class="figure">
           <img src="imgs/radar.png" alt="Radar evaluation of representative methods">
           <div class="caption">
-            Fig. 3. Evaluation of representative methods on the DenseSIRST and SIRST3 datasets, where the outer regions indicate superior detection performance.
+            Fig. 3. Evaluation of representative methods on the DenseSIRST, SIRST3, and IRSTD-1k datasets, where the outer regions indicate superior detection performance.
           </div>
         </div>
       </div>
@@ -709,20 +712,23 @@
       <div class="performance-table-image">
         <img src="imgs/perform.png" alt="Detection performance comparison table">
         <div class="caption">
-          Table I. Detection performance comparison on DenseSIRST, SIRST3, and IRSTD-1K. Metrics include mIoU/nIoU/P<sub>d</sub> (%), F<sub>a</sub> (10<sup>&minus;6</sup>), Params (M), FLOPs (G), and FPS.
+          Table I. Detection performance comparison on DenseSIRST, SIRST3, and IRSTD-1k. Metrics include mIoU/nIoU/P<sub>d</sub> (%), F<sub>a</sub> (10<sup>&minus;6</sup>), Params (M), FLOPs (G), and FPS.
         </div>
       </div>
 
       <div class="figure">
         <img src="imgs/roc.jpg" alt="ROC curves of different methods">
         <div class="caption">
-          ROC comparison on DenseSIRST, SIRST3, and IRSTD-1K. The proposed method maintains stable detection capability under strict false-alarm constraints.
+          ROC comparison on DenseSIRST, SIRST3, and IRSTD-1k. The proposed method maintains stable detection capability under strict false-alarm constraints.
         </div>
       </div>
 
       <div class="text-block" style="margin-top: 26px;">
         <p>
-          S<sup>2</sup>DRNet contains only 0.85M parameters and 6.09G FLOPs, while achieving 16.18 FPS. The results indicate a favorable balance between detection accuracy and deployment efficiency.
+          On DenseSIRST, S<sup>2</sup>DRNet achieves 82.12% mIoU, 82.34% nIoU, 97.51% P<sub>d</sub>, and 2.05&times;10<sup>&minus;6</sup> F<sub>a</sub>. On SIRST3, it obtains 84.91% mIoU, 86.43% nIoU, 97.14% P<sub>d</sub>, and 9.14&times;10<sup>&minus;6</sup> F<sub>a</sub>. On IRSTD-1k, it achieves 72.51% mIoU and 93.60% P<sub>d</sub>.
+        </p>
+        <p>
+          The model contains only 0.85M parameters and 6.09G FLOPs, while achieving 16.18 FPS, showing a favorable balance between detection accuracy and efficiency.
         </p>
       </div>
     </div>
@@ -736,7 +742,7 @@
       <div class="figure">
         <img src="imgs/vision_1.jpg" alt="Visual comparison of infrared small target detection methods">
         <div class="caption">
-          Visual comparison on DenseSIRST, SIRST3, and IRSTD-1K. S<sup>2</sup>DRNet separates adjacent targets more clearly and suppresses background interference more effectively.
+          Visual comparison on DenseSIRST, SIRST3, and IRSTD-1k. S<sup>2</sup>DRNet separates adjacent targets more clearly and suppresses background interference more effectively.
         </div>
       </div>
     </div>
@@ -756,36 +762,20 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Conclusion</h2>
-      <div class="section-line"></div>
-
-      <div class="text-block">
-        <p>
-          S<sup>2</sup>DRNet formulates clustered infrared small target detection as a target&ndash;background discrimination problem jointly driven by spatial aggregation, spectral decoupling, cross-domain rectification, and boundary mining. MDAM suppresses neighboring-target response diffusion, SDRM decouples background structures, target details, and noise disturbances, HDFR performs adaptive cross-domain feature rectification, and CBML strengthens boundary-gap supervision from the optimization perspective.
-        </p>
-        <p>
-          Extensive experiments demonstrate that S<sup>2</sup>DRNet outperforms representative existing methods on three public datasets while maintaining a favorable accuracy&ndash;efficiency balance.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="section gray">
     <div class="container">
       <h2 class="section-title">Funding</h2>
       <div class="section-line"></div>
 
       <div class="funding-text">
-        This work was supported by the Tianshan Talents Cultivation Program -- Leadings Talents for Scientific and Technological Innovation (No.2024TSYCLJ0002), and the Xinjiang University Outstanding Graduate Student Innovation Project (XJDX2025YJS088).
+        This work was supported by the Tianshan Talents Cultivation Program - Leadings Talents for Scientific and Technological Innovation (No.2024TSYCLJ0002), and the Xinjiang University Outstanding Graduate Student Innovation Project (XJDX2025YJS088).
       </div>
     </div>
   </section>
 
   <footer class="footer">
     <div class="container">
-      This project page is adapted for S<sup>2</sup>DRNet. Replace the paper, dataset, and code links when public resources are available.
+      Code and project resources for S<sup>2</sup>DRNet are available through the project page.
     </div>
   </footer>
 </body>

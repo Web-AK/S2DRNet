@@ -1,11 +1,12 @@
-# S<sup>2</sup>DRNet: Spatial-Spectral Differential Rectification with Coupling Suppression for Clustered Infrared Small Target Detection
+# S<sup>2</sup>DRNet: Spatial–Spectral Differential Rectification with Coupling Suppression for Clustered Infrared Small Target Detection
 
 <div align="center">
 
-**Peng Wang<sup>1</sup>, Ziling Lu<sup>1</sup>, Hankiz Yilahun<sup>1</sup>, Jihong Zhu<sup>2</sup>, and Askar Hamdulla<sup>1</sup>**
+**Peng Wang<sup>1</sup>, Ziling Lu<sup>1</sup>, Hankiz Yilahun<sup>1</sup>, Jihong Zhu<sup>2</sup>, Eksan Firkat<sup>3</sup>, and Askar Hamdulla<sup>1</sup>**
 
 <sup>1</sup>School of Computer Science and Technology, Xinjiang University<br>
-<sup>2</sup>Department of Precision Instrument, Tsinghua University
+<sup>2</sup>Department of Precision Instrument, Tsinghua University<br>
+<sup>3</sup>Tsinghua Shenzhen International Graduate School, Tsinghua University<br>
 
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](assets/paper.pdf)
 [![Dataset](https://img.shields.io/badge/Dataset-Link-blue)](#datasets)
@@ -18,7 +19,7 @@
 
 ## News
 
-* **The project page is available.**
+* **The project page and manuscript PDF are available.**
 * **Dataset links and code usage instructions are available.**
 
 If this repository is helpful to your research, please consider giving it a star.⭐⭐⭐
@@ -27,14 +28,14 @@ If this repository is helpful to your research, please consider giving it a star
 
 ## Overview
 
-Clustered infrared small target detection (CIRSTD) aims to distinguish densely adjacent small targets under low signal-to-noise ratios, weak textures, and complex background interference. Compared with conventional sparse infrared small target detection, clustered scenarios are more prone to response coupling, target adhesion, missed detection, and background false alarms.
+Infrared small target detection (IRSTD) is crucial in infrared remote sensing, while clustered IRSTD (CIRSTD) is more challenging due to dense target distributions and spatial response coupling. Existing methods remain limited in suppressing spatial response coupling among clustered targets and non-target interference, with insufficient boundary supervision, which may lead to missed detections, false alarms, and boundary ambiguity.
 
-To address these challenges, we propose **S<sup>2</sup>DRNet**, a **Spatial-Spectral Differential Rectification Network** for clustered infrared small target detection. S<sup>2</sup>DRNet improves clustered-target discrimination from four complementary perspectives:
+To address these issues, we propose **S<sup>2</sup>DRNet**, a **Spatial–Spectral Differential Rectification Network** for clustered infrared small target detection. The network improves clustered-target discrimination through four complementary components:
 
-1. **Spatial aggregation** for suppressing neighboring-target response diffusion.
-2. **Spectral decoupling** for separating target details, background structures, and noise disturbances.
-3. **Hybrid-domain feature rectification** for balancing spatial semantic features and frequency-domain structural priors.
-4. **Boundary-gap mining supervision** for strengthening target-separation regions during optimization.
+1. **MDAM** alleviates response coupling between adjacent targets through collaborative modeling of square local neighborhoods and cross-strip directional neighborhoods.
+2. **SDRM** integrates spectral decomposition and multi-directional differential modeling to suppress non-target high-frequency interference.
+3. **HDFR** aligns spatial semantic information with spectral structural cues to achieve cross-domain feature rectification.
+4. **CBML** alleviates boundary ambiguity from the optimization perspective.
 
 <p align="center">
   <img src="imgs/introduction.jpg" alt="Motivation and overview of S2DRNet" width="350"/>
@@ -48,14 +49,14 @@ To address these challenges, we propose **S<sup>2</sup>DRNet**, a **Spatial-Spec
 
 ## Motivation
 
-CIRSTD should not be regarded as a simple extension of sparse IRSTD. In clustered scenes, the detector must perform fine-grained target-background discrimination under stronger inter-target coupling and more severe background interference.
+CIRSTD should not be regarded as a simple extension of sparse IRSTD. In clustered scenes, the detector must perform refined target-background discrimination jointly driven by spatial aggregation, spectral decoupling, cross-domain rectification, and boundary mining.
 
 The key challenges are summarized as follows:
 
-* **Target-response coupling.** Dense and adjacent infrared small targets tend to generate mutually diffused responses, which causes target adhesion and weakens individual target separation.
-* **Spectral interference aliasing.** Target details, background edges, and high-frequency noise are easily mixed in complex infrared scenes, producing missed detections and false alarms.
-* **Cross-domain feature imbalance.** Directly fusing spatial semantic features and frequency-domain structural priors can introduce redundant responses and unbalanced feature contributions.
-* **Insufficient boundary supervision.** Narrow gap regions between adjacent targets occupy very few pixels, so conventional segmentation losses provide limited supervision for target-separation boundaries.
+* **Target-response coupling.** Spatial adjacency among clustered infrared small targets tends to induce mutual response coupling, causing target adhesion and difficult narrow-gap separation.
+* **Spectral interference aliasing.** Background edges, high-frequency noise, and target details exhibit similar frequency-domain responses, resulting in aliasing between targets and non-target interference.
+* **Cross-domain feature imbalance.** Directly fusing spatial semantic features and frequency-domain structural priors may introduce response imbalance and redundant interference.
+* **Insufficient boundary supervision.** Narrow gap regions occupy only a very small proportion of pixels, making conventional segmentation losses insufficient for effective boundary supervision.
 
 ---
 
@@ -66,9 +67,10 @@ The key challenges are summarized as follows:
 </p>
 
 <div align="center">
-  <b>Overall architecture of S<sup>2</sup>DRNet.</b> The framework performs parallel spatial-spectral feature extraction and hybrid-domain feature rectification for clustered infrared small target detection.
+  <b>Overall architecture of S<sup>2</sup>DRNet.</b> The framework performs parallel spatial–spectral feature extraction and hybrid-domain feature rectification for clustered infrared small target detection.
 </div>
 
+S<sup>2</sup>DRNet consists of two stages: **parallel spatial–spectral feature extraction** and **hybrid-domain fusion**. The spatial branch progressively extracts multi-scale spatial features through residual blocks and MDAM, while the frequency-domain branch uses SDRM to strengthen weak-target discriminative representations through spectral decoupling. HDFR then fuses spatial features with frequency-domain priors in a bottom-up manner, and CBML strengthens supervision of adjacent-target boundaries and gap regions during training.
 
 ---
 
@@ -76,14 +78,14 @@ The key challenges are summarized as follows:
 
 ### MDAM: Multi-granularity Dynamic Aggregation Module
 
-MDAM enhances clustered-target spatial representation through two complementary dynamic aggregation strategies:
+MDAM enhances clustered-target spatial representation by jointly modeling square local neighborhoods and cross-strip directional neighborhoods:
 
-* **Square dynamic aggregation** for local response enhancement.
-* **Cross-strip dynamic aggregation** for directional context modeling and adjacent-target coupling suppression.
+* **Square dynamic aggregation** enhances weak local target responses within square neighborhoods.
+* **Cross-strip dynamic aggregation** models horizontal and vertical strip contexts to alleviate adjacent-target response coupling.
 
 ### SDRM: Spectral Differential Representation Module
 
-SDRM performs wavelet-based structure-detail decomposition and multi-directional differential refinement. It decomposes features into low-frequency structural components and high-frequency details, then refines target details while suppressing edge-noise interference.
+SDRM introduces lightweight Haar wavelet decomposition and multi-directional differential refinement. It decomposes features into low-frequency structural components and high-frequency details, then preserves structural cues, refines target details, and suppresses edge-noise interference.
 
 <p align="center">
   <img src="imgs/MDAM+SDRM.jpg" alt="Detailed structures of MDAM and SDRM" width="900"/>
@@ -105,7 +107,7 @@ SDRM performs wavelet-based structure-detail decomposition and multi-directional
 
 ### CBML: Coupling-suppressed Boundary Mining Loss
 
-CBML strengthens the optimization of target-separation regions by emphasizing boundary and narrow-gap pixels between adjacent targets. This supervision helps reduce target adhesion, boundary ambiguity, and response coupling in clustered infrared scenes.
+CBML strengthens target-separation supervision through boundary-gap joint weighting and hard-pixel mining. It emphasizes target contours and narrow background gaps between adjacent targets, thereby reducing target adhesion and boundary ambiguity in clustered infrared scenes.
 
 ---
 
@@ -113,9 +115,9 @@ CBML strengthens the optimization of target-separation regions by emphasizing bo
 
 The experiments are conducted on three public infrared small target detection datasets:
 
-* **DenseSIRST** [[DenseSIRST](https://github.com/YimianDai)] 
-* **SIRST3** [[SIRST3](https://github.com/XinyiYing/LESPS)]
-* **IRSTD-1k** [[IRSTD-1k](https://drive.google.com/file/d/1JoGDGF96v4CncKZprDnoIor0k1opaLZa/view)]
+* **DenseSIRST** [[DenseSIRST](https://github.com/YimianDai)]: 1,024 images with 13,655 targets, characterized by dense spatial distributions and frequent target adhesion.
+* **SIRST3** [[SIRST3](https://github.com/XinyiYing/LESPS)]: 2,755 images integrated from SIRST V1, NUDT-SIRST, and IRSTD-1k, covering diverse scenes, target scales, and background conditions.
+* **IRSTD-1k** [[IRSTD-1k](https://drive.google.com/file/d/1JoGDGF96v4CncKZprDnoIor0k1opaLZa/view)]: 1,001 real infrared images with complex backgrounds, weak targets, and low signal-to-noise ratios.
 
 
 Please organize the datasets according to the dataloader settings in this repository. A typical directory structure can be arranged as follows:
@@ -130,7 +132,7 @@ datasets/
 │   ├── images/
 │   ├── masks/
 │   └── splits/
-└── IRSTD-1K/
+└── IRSTD-1k/
     ├── images/
     ├── masks/
     └── splits/
@@ -183,16 +185,15 @@ pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --e
 
 ### 1. Data Preparation
 
-Download the required datasets and place them under the `dataset/` directory. Then check the dataset path and split settings in the corresponding configuration or training file.
+Download the required datasets and place them under the `datasets/` directory. Then check the dataset path and split settings in the corresponding configuration or training file.
 
 ### 2. Training
 
 ```bash
 python train.py
-python train.py   --model S2DRNet   --dataset DenseSIRST   --dataset_type mask   --cuda_devices 0   --epochs 800   --lr 1e-3   --seed 42   --edge_weight 3   --hard_ratio 0.5
+python train.py   --model S2DRNet   --dataset DenseSIRST   --dataset_type mask   --cuda_devices 0   --epochs 1000   --lr 1e-3   --seed 42   --edge_weight 3   --hard_ratio 0.5
 ```
 
-For training on a specific dataset, modify the dataset name, data path, and training configuration in the training script or config file.
 
 ### 3. Testing
 
@@ -218,7 +219,7 @@ Before testing, please set the path of the trained model weights in the testing 
   <b>Performance-efficiency comparison.</b> S<sup>2</sup>DRNet maintains a favorable balance between detection accuracy and deployment efficiency.
 </div>
 
-S<sup>2</sup>DRNet contains **0.85M parameters** and **6.09G FLOPs**.
+---
 
 ### ROC Curves
 
@@ -227,8 +228,10 @@ S<sup>2</sup>DRNet contains **0.85M parameters** and **6.09G FLOPs**.
 </p>
 
 <div align="center">
-  <b>ROC comparison.</b> The proposed method maintains stable detection capability under strict false-alarm constraints.
+  <b>ROC comparison.</b> The proposed method maintains stable detection capability under strict false-alarm constraints on DenseSIRST, SIRST3, and IRSTD-1k.
 </div>
+
+---
 
 ### Visual Results
 
@@ -240,6 +243,8 @@ S<sup>2</sup>DRNet contains **0.85M parameters** and **6.09G FLOPs**.
   <b>Visual comparison.</b> S<sup>2</sup>DRNet separates adjacent targets more clearly and suppresses background interference more effectively.
 </div>
 
+---
+
 ### Response Distribution Analysis
 
 <p align="center">
@@ -250,8 +255,9 @@ S<sup>2</sup>DRNet contains **0.85M parameters** and **6.09G FLOPs**.
   <b>Three-dimensional response distributions.</b> Sharper and cleaner response peaks indicate more accurate target localization and stronger background suppression.
 </div>
 
----
 
+
+---
 
 ## Contact
 
